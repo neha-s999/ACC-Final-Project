@@ -21,6 +21,7 @@ import HtmlParsing.HtmlParsingYupik;
 import Webcrawling.WebCrawlerSaveOnFoods;
 import Webcrawling.WebCrawlerShopFoodEx;
 import Webcrawling.WebCrawlerYupik;
+import Actions.FrequencyCount;
 
 public class UwinFoodCart {
 
@@ -39,7 +40,7 @@ public class UwinFoodCart {
         String choice;
 
         do {
-            System.out.println("1. Crawl Websites\n2. Perform Data Validation\n3. Parse Website Data\n4. Search and Analyze Products\n5. Exit");
+        	System.out.println("1. Crawl Websites\n2. Perform Data Validation\n3. Parse Website Data\n4. Search and Analyze Products\n5. Check Frequency Count\n6. Exit");
             System.out.print("Enter your choice: ");
             choice = scanner.nextLine();
 
@@ -57,6 +58,9 @@ public class UwinFoodCart {
                     searchAndAnalyzeProducts();
                     break;
                 case "5":
+                    checkFrequencyCount();
+                    break;
+                case "6":
                     System.out.println("Thank You");
                     break;
                 default:
@@ -64,7 +68,7 @@ public class UwinFoodCart {
                     break;
             }
 
-        } while (!choice.equals("5"));
+        } while (!choice.equals("6"));
 
         scanner.close();
     }
@@ -117,64 +121,105 @@ public class UwinFoodCart {
             System.out.println("Done with parsing\n");
         }
     }
+    private void checkFrequencyCount() {
+        System.out.println("Checking frequency count...");
+        // System.out.println("Enter product name:");
+        // String product = scanner.nextLine();
+        // Call the main method of FrequencyCount
+        FrequencyCount.main(new String[]{""});
+    }
 
 
     private void searchAndAnalyzeProducts() {
-        System.out.println("Searching and analyzing products...");
+    	System.out.println("Searching and analyzing products...");
 
         Scanner inp = new Scanner(System.in);
         String ch;
-        boolean spellCheck = false;
 
         do {
-            System.out.println("\nEnter product name");
-            String product = inp.nextLine();
-
             try {
-                // Spell Checking of product
-                spellCheck = SpellChecking.SpellChecker(product);
+            	boolean spellCheck = false;
+                System.out.println("Fetching list of common categories...");
+                String[] listOfCategories = ProductCategoryList.getCategories();
 
-                if (!spellCheck) {
-                    System.out.println("Please check the spelling");
-                    // Using word completion to give suggestions of words
-                    List<String> suggestedWords = WordCompletion.findSimilarWords(product);
-                    System.out.println("\nSome suggested words are:");
-                    for (String word : suggestedWords) {
-                        System.out.println(word);
-                    }
-                } else {
-                    System.out.println("List of products: ");
-                    // Get the products that match the search key and its category
-                    Map<String, Double> products = ProductCategoryList.getSimilarProducts(product);
+                System.out.println("List of common categories:");
+                for (int i = 0; i < listOfCategories.length; i++) {
+                    System.out.println(i + 1 + ". " + listOfCategories[i]);
+                }
 
-                    if (products.isEmpty()) {
-                        System.out.println("No products found for the given search key.");
-                    } else {
-                        System.out.println("\nTop 5 products:");
-                        // Get 5 products from the list that are least expensive
-                        BestDeals.TopDeals(products);
+                System.out.println("Choose an option:\n1. Get Products by Category\n2. Search for a Product");
+                ch = inp.nextLine();
 
-                        System.out.println("\nFrequency Count:");
-                        // Inverted indexing and frequency count
-                        InvertedIndexing.Indexing(urlMap, product);
+                switch (ch) {
+                    case "1":
+                        System.out.println("Select a category (enter the number):");
+                        int categoryChoice = Integer.parseInt(inp.nextLine());
 
-                        // Maintain search frequency
-                        SearchFrequency.SearchCount(product);
+                        Map<String, Double> products = ProductCategoryList.getListOfProductByCategory(listOfCategories[categoryChoice - 1]);
 
-                        // Page ranking for the product
-                        System.out.println("Do you wish to page rank? If Yes, enter Y");
-                        ch = inp.nextLine();
-                        if (ch.equalsIgnoreCase("y")) {
-                            PageRanking.pageRank(product);
+                        if (products.isEmpty()) {
+                            System.out.println("No products found for the given category.");
+                        } else {
+                            System.out.println("\nTop 5 products:");
+                            BestDeals.TopDeals(products);
+
+                            System.out.println("\nFrequency Count:");
+                            InvertedIndexing.Indexing(urlMap, listOfCategories[categoryChoice - 1]);
+
+                            SearchFrequency.SearchCount(listOfCategories[categoryChoice - 1]);
+
+                            System.out.println("Do you wish to page rank? If Yes, enter Y");
+                            ch = inp.nextLine();
+                            if (ch.equalsIgnoreCase("y")) {
+                                PageRanking.pageRank(listOfCategories[categoryChoice - 1]);
+                            }
                         }
-                    }
+                        break;
+                    case "2":
+                        System.out.println("Enter product name:");
+                        String product = inp.nextLine();
+                        spellCheck = SpellChecking.SpellChecker(product);
+
+                        if (!spellCheck) {
+                            System.out.println("Please check the spelling");
+                            List<String> suggestedWords = WordCompletion.findSimilarWords(product);
+                            System.out.println("\nSome suggested words are:");
+                            for (String word : suggestedWords) {
+                                System.out.println(word);
+                            }
+                        } else {
+                            boolean repeat = true;
+                            while (repeat) {
+                                System.out.println("List of products: ");
+                                // Get the products that match the search key and its category
+                                products = ProductCategoryList.getSimilarProducts(product);
+                                System.out.println("\nTop 5 products:");
+                                // Get 5 products from the list that are least expensive
+                                BestDeals.TopDeals(products);
+                                System.out.println("\nFrequency Count:");
+                                // Inverted indexing and frequency count
+                                InvertedIndexing.Indexing(urlMap, product);
+                                // Maintain search frequency
+                                SearchFrequency.SearchCount(product);
+                                // Page ranking for the product
+                                System.out.println("Do you wish to page rank? If Yes, enter Y");
+                                ch = inp.nextLine();
+                                if (ch.equalsIgnoreCase("y")) {
+                                    PageRanking.pageRank(product);
+                                }
+                                repeat = false;
+                            }
+                        }
+                        break;
+                    default:
+                        System.out.println("Choose correct option");
+                        break;
                 }
             } catch (Exception e) {
-                // Handle the IOException as needed
                 e.printStackTrace();
             }
 
-            System.out.println("\nDo you want to search for another product? If Yes, enter Y");
+            System.out.println("\nDo you want to perform another search? If Yes, enter Y");
             ch = inp.nextLine();
         } while (ch.equalsIgnoreCase("Y"));
 

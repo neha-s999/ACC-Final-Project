@@ -66,3 +66,23 @@ Fruits & Vegetables | Wonderful - Naturally Seedless Lemons, 2 Pound | $5.99
 Fresh Fruit | Apples - Ambrosia, Fresh, 206.67 Gram | $1.36 avg/ea
 Avocado & Tropical | Avocados - Large, Mesh Bag, 4 Each | $5.69
 Bananas & Plantains | Bananas - Organic Each, Fresh, 200 Gram | $0.57 avg/ea
+Fruits & Vegetables | Apples - Ambrosia, 1 Bag, 3 Pound | $5.99
+Fresh Fruit | Apples - Ambrosia, Fresh, 206.67 Gram | $1.36 avg/ea
+Avocado & Tropical | Avocados - Large, Mesh Bag, 4 Each | $5.69
+Bananas & Plantains | Bananas - Organic Each, Fresh, 200 Gram | $0.57 avg/ea
+Fruits & Vegetables | Apples - Ambrosia, 1 Bag, 3 Pound | $5.99
+Fresh Fruit | Apples - Ambrosia, Fresh, 206.67 Gram | $1.36 avg/ea
+Avocado & Tropical | Avocados - Large, Mesh Bag, 4 Each | $5.69
+Bananas & Plantains | Bananas - Organic Each, Fresh, 200 Gram | $0.57 avg/ea
+Fruits & Vegetables | Cucumber - Long English Fresh 3Pk, 3 Each | $4.99
+Fresh Fruit | Apples - Ambrosia, Fresh, 206.67 Gram | $1.36 avg/ea
+Avocado & Tropical | Avocados - Large, Mesh Bag, 4 Each | $5.69
+Bananas & Plantains | Bananas - Organic Each, Fresh, 200 Gram | $0.57 avg/ea
+Fruits & Vegetables | Manns - Sugar Snap Peas, 680 Gram | $8.99
+Fresh Fruit | Apples - Ambrosia, Fresh, 206.67 Gram | $1.36 avg/ea
+Avocado & Tropical | Avocados - Large, Mesh Bag, 4 Each | $5.69
+Bananas & Plantains | Bananas - Organic Each, Fresh, 200 Gram | $0.57 avg/ea
+Fruits & Vegetables | Apples - Ambrosia, 1 Bag, 3 Pound | $5.99
+Fresh Fruit | Apples - Ambrosia, Fresh, 206.67 Gram | $1.36 avg/ea
+Avocado & Tropical | Avocados - Large, Mesh Bag, 4 Each | $5.69
+Bananas & Plantains | Bananas - Organic Each, Fresh, 200 Gram | $0.57 avg/ea
